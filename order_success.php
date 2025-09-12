@@ -10,7 +10,7 @@ if (!isset($_GET['order_id'])) {
 $order_id = (int)$_GET['order_id'];
 
 // Fetch order details
-$order_sql = "SELECT address, order_date FROM orders WHERE id = $order_id";
+$order_sql = "SELECT address, order_date FROM orders WHERE order_id = $order_id";
 $order_result = mysqli_query($conn, $order_sql);
 
 if (mysqli_num_rows($order_result) !== 1) {
@@ -32,6 +32,7 @@ $items_result = mysqli_query($conn, $items_sql);
 <html>
 <head>
     <title>Order Confirmation</title>
+    <link rel="stylesheet" href="assets/order_success.css">
 </head>
 <body>
     <h1>✅ Order Placed Successfully!</h1>

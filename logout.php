@@ -1,8 +1,7 @@
 <?php
 session_start();
+session_unset();
 session_destroy();
-header("Location: ../login.php");
-exit();
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +35,7 @@ exit();
 <body>
     <div class="message">
         <h2>👋 You have been logged out.</h2>
-        <p>Redirecting to login page...</p>
+        <p>Redirecting to login page..., <a href="user/login.php">click here</a> if you are not redirected.</p>
         <p>If you're not redirected, <a href="user/login.php">click here</a> to login again.</p>
     </div>
 </body>

@@ -28,11 +28,25 @@ $cart = $_SESSION['cart'];
 $order_sql = "INSERT INTO orders (user_id, address, order_date) VALUES ($user_id, '$address', NOW())";
 if (mysqli_query($conn, $order_sql)) {
     $order_id = mysqli_insert_id($conn);
+    $invalid_books = [];
 
     // Step 5: Insert each item into `order_items` table
     foreach ($cart as $book_id => $quantity) {
         $book_id = (int)$book_id;
         $quantity = (int)$quantity;
+
+        // Validate book_id range and existence
+        if ($book_id < 1 || $book_id > 50) {
+            $invalid_books[] = $book_id;
+            continue;
+        }
+
+        $check_sql = "SELECT id FROM books WHERE id = $book_id";
+        $check_result = mysqli_query($conn, $check_sql);
+        if (mysqli_num_rows($check_result) == 0) {
+            $invalid_books[] = $book_id;
+            continue;
+        }
 
         $item_sql = "INSERT INTO order_items (order_id, book_id, quantity) VALUES ($order_id, $book_id, $quantity)";
         mysqli_query($conn, $item_sql);
@@ -40,6 +54,12 @@ if (mysqli_query($conn, $order_sql)) {
 
     // Step 6: Clear cart and redirect
     unset($_SESSION['cart']);
+
+    // Optional: Show skipped items
+    if (!empty($invalid_books)) {
+        echo "<p>Order placed, but some items were skipped: " . implode(', ', $invalid_books) . "</p>";
+    }
+
     header("Location: order_success.php?order_id=$order_id");
     exit();
 } else {

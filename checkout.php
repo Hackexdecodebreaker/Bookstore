@@ -20,6 +20,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 </head>
 <body>
     <h1>🧾 Checkout</h1>
+    <link rel="stylesheet" type="text/css" href="assets/checkout.css">
     <form method="POST" action="process_checkout.php">
         <label>Shipping Address:</label>
         <input type="text" name="address" required>

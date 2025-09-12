@@ -1,8 +1,8 @@
 <?php
 $servername="localhost";
-$username="root";
-$password="";
-$dbname="Bookstore";
+$username="ceiscy_aj513";
+$password="_@I%8WFGFp+2";
+$dbname="ceiscy_aj513";
 
 $conn=mysqli_connect($servername,$username,$password,$dbname);
 if (!$conn) {
